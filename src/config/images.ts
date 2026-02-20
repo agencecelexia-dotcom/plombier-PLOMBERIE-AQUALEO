@@ -1,8 +1,10 @@
 /**
- * Mapping des images du site — 33 images uniques pour 46 emplacements.
+ * Mapping des images du site — 32 images uniques pour Plomberie Aqualeo.
  *
  * Les constantes partagees permettent de remplir UN chemin
  * et toutes les pages qui reutilisent cette image se mettent a jour.
+ *
+ * Pour generer les images : voir PROMPTS-IMAGES.md a la racine du projet.
  */
 
 // ============================================================
@@ -10,39 +12,39 @@
 // ============================================================
 
 /** #7 — 21:9 — heroes blog, avis-clients, contact, a-propos, realisations + section cta-bandeau */
-const HERO_GENERIQUE = "/images/heroes/generique-plombier.jpeg";
+const HERO_GENERIQUE = "/images/heroes/hero-generique.jpeg";
 
-/** #3 — 16:9 — hero plomberie + page plomberie-tuyauterie */
-const IMG_PLOMBERIE_HERO = "/images/heroes/plomberie.jpeg";
+/** #3 — 16:9 — hero plomberie + section tuyauterie */
+const IMG_PLOMBERIE_HERO = "/images/heroes/hero-plomberie.jpeg";
 
-/** #4 — 16:9 — hero renovation-sdb + page renovation-complete + realisation sdb-oullins-after */
-const IMG_RENOVATION_SDB = "/images/heroes/renovation-sdb.jpeg";
+/** #4 — 16:9 — hero installation-sanitaire + section renovation-complete + realisation Nanterre (apres) */
+const IMG_RENOVATION_SDB = "/images/heroes/hero-installation-sanitaire.jpeg";
 
-/** #15 — 4:3 — page douche-italienne + realisation douche-lyon7-after */
-const IMG_DOUCHE_ITALIENNE = "/images/pages/renovation-douche-italienne.jpeg";
+/** #13 — 4:3 — section douche-italienne + realisation Creteil (apres) */
+const IMG_DOUCHE_ITALIENNE = "/images/pages/page-douche-italienne.jpeg";
 
-/** #16 — 4:3 — page PMR + realisation sdb-pmr-lyon6-after */
-const IMG_SDB_PMR = "/images/pages/renovation-pmr.jpeg";
+/** #12 — 3:2 — section wc-suspendu + realisation Levallois-Perret (apres) */
+const IMG_SDB_PMR = "/images/pages/page-wc-suspendu.jpeg";
 
-/** #17 — 3:2 — page chaudiere-gaz + realisation chaudiere-tassin-after */
-const IMG_CHAUDIERE_GAZ = "/images/pages/chauffage-chaudiere-gaz.jpeg";
+/** #15 — 3:2 — section compteur-eau + realisation Saint-Denis (apres) */
+const IMG_CHAUDIERE_GAZ = "/images/pages/page-compteur-eau.jpeg";
 
-/** #19 — 3:2 — page plancher-chauffant + realisation plancher-ecully-after */
-const IMG_PLANCHER_CHAUFFANT = "/images/pages/chauffage-plancher-chauffant.jpeg";
+/** #16 — 3:2 — section alimentation-eau + realisation Issy-les-Moulineaux (apres) */
+const IMG_PLANCHER_CHAUFFANT = "/images/pages/page-alimentation-eau.jpeg";
 
-/** #8 — 4:3 — section urgence-card + realisation depannage-lyon2-before */
-const IMG_FUITE_EAU = "/images/sections/urgence-card.png";
+/** #17 — 4:3 — section urgence-card + realisation Vincennes (avant) */
+const IMG_FUITE_EAU = "/images/sections/section-urgence-fuite.jpeg";
 
 // ============================================================
 // Hero pages (11 emplacements → 7 images uniques)
 // ============================================================
 export const heroImages: Record<string, string> = {
-  "accueil":              "/images/heroes/accueil.jpeg",
-  "depannage-plomberie":  "/images/heroes/depannage-plomberie.jpeg",
+  "accueil":              "/images/heroes/hero-accueil.jpeg",
+  "depannage-plomberie":  "/images/heroes/hero-depannage.jpeg",
   "plomberie":            IMG_PLOMBERIE_HERO,
   "renovation-sdb":       IMG_RENOVATION_SDB,
-  "chauffage":            "/images/heroes/chauffage.jpeg",
-  "chauffe-eau":          "/images/heroes/chauffe-eau.jpeg",
+  "chauffage":            "/images/heroes/hero-adduction-eau.jpeg",
+  "chauffe-eau":          "/images/heroes/hero-reparation-tuyauterie.jpeg",
   "blog":                 HERO_GENERIQUE,
   "avis-clients":         HERO_GENERIQUE,
   "contact":              HERO_GENERIQUE,
@@ -56,28 +58,28 @@ export const heroImages: Record<string, string> = {
 export const sectionImages: Record<string, string> = {
   "cta-bandeau":          HERO_GENERIQUE,
   "urgence-card":         IMG_FUITE_EAU,
-  "projet-card":          "/images/sections/projet-card.jpeg",
+  "projet-card":          "/images/sections/section-projet-sdb.jpeg",
 };
 
 // ============================================================
-// Pages specifiques (12 emplacements → 10 images uniques)
+// Pages specifiques (12 emplacements → 9 images uniques)
 // ============================================================
 export const pageImages: Record<string, string> = {
   // A propos
-  "a-propos-fondateur":          "/images/pages/a-propos-fondateur.jpeg",
-  "a-propos-equipe":             "/images/pages/a-propos-equipe.jpeg",
+  "a-propos-fondateur":          "/images/pages/page-fondateur-yohann.jpeg",
+  "a-propos-equipe":             "/images/pages/page-artisan-camionnette.jpeg",
   // Plomberie
-  "plomberie-robinetterie":      "/images/pages/plomberie-robinetterie.jpeg",
+  "plomberie-robinetterie":      "/images/pages/page-robinetterie.jpeg",
   "plomberie-tuyauterie":        IMG_PLOMBERIE_HERO,
-  "plomberie-recherche-fuite":   "/images/pages/plomberie-recherche-fuite.jpeg",
-  "plomberie-mise-aux-normes":   "/images/pages/plomberie-mise-aux-normes.jpeg",
-  // Renovation salle de bain
+  "plomberie-recherche-fuite":   "/images/pages/page-recherche-fuite.jpeg",
+  "plomberie-mise-aux-normes":   IMG_SDB_PMR,
+  // Installation sanitaire
   "renovation-douche-italienne": IMG_DOUCHE_ITALIENNE,
   "renovation-complete":         IMG_RENOVATION_SDB,
   "renovation-pmr":              IMG_SDB_PMR,
-  // Chauffage
+  // Adduction d eau
   "chauffage-chaudiere-gaz":     IMG_CHAUDIERE_GAZ,
-  "chauffage-pac":               "/images/pages/chauffage-pac.jpeg",
+  "chauffage-pac":               "/images/pages/page-raccordement-reseau.jpeg",
   "chauffage-plancher-chauffant": IMG_PLANCHER_CHAUFFANT,
 };
 
@@ -85,24 +87,24 @@ export const pageImages: Record<string, string> = {
 // Realisations avant/apres (20 emplacements → 14 images uniques)
 // ============================================================
 export const realisationImages: Record<string, string> = {
-  "sdb-villeurbanne-before":        "/images/realisations/sdb-villeurbanne-before.jpeg",
-  "sdb-villeurbanne-after":         "/images/realisations/sdb-villeurbanne-after.png",
-  "cuisine-lyon3-before":           "/images/realisations/cuisine-lyon3-before.png",
-  "cuisine-lyon3-after":            "/images/realisations/cuisine-lyon3-after.jpeg",
-  "chauffe-eau-caluire-before":     "/images/realisations/chauffe-eau-caluire-before.png",
-  "chauffe-eau-caluire-after":      "/images/realisations/chauffe-eau-caluire-after.png",
-  "pac-bron-before":                "/images/realisations/pac-bron-before.jpeg",
-  "pac-bron-after":                 "/images/realisations/pac-bron-after.png",
-  "sdb-pmr-lyon6-before":           "/images/realisations/sdb-pmr-lyon6-before.jpeg",
-  "sdb-pmr-lyon6-after":            IMG_SDB_PMR,
-  "chaudiere-tassin-before":        "/images/realisations/chaudiere-tassin-before.png",
-  "chaudiere-tassin-after":         IMG_CHAUDIERE_GAZ,
-  "douche-lyon7-before":            "/images/realisations/douche-lyon7-before.png",
-  "douche-lyon7-after":             IMG_DOUCHE_ITALIENNE,
-  "plancher-chauffant-ecully-before": "/images/realisations/plancher-chauffant-ecully-before.png",
+  "sdb-villeurbanne-before":          "/images/realisations/real-sdb-paris15-before.jpeg",
+  "sdb-villeurbanne-after":           "/images/realisations/real-sdb-paris15-after.jpeg",
+  "cuisine-lyon3-before":             "/images/realisations/real-cuisine-versailles-before.jpeg",
+  "cuisine-lyon3-after":              "/images/realisations/real-cuisine-versailles-after.jpeg",
+  "chauffe-eau-caluire-before":       "/images/realisations/real-fuite-boulogne-before.jpeg",
+  "chauffe-eau-caluire-after":        "/images/realisations/real-fuite-boulogne-after.jpeg",
+  "pac-bron-before":                  "/images/realisations/real-adduction-massy-before.jpeg",
+  "pac-bron-after":                   "/images/realisations/real-adduction-massy-after.jpeg",
+  "sdb-pmr-lyon6-before":             "/images/realisations/real-wc-levallois-before.jpeg",
+  "sdb-pmr-lyon6-after":              IMG_SDB_PMR,
+  "chaudiere-tassin-before":          "/images/realisations/real-tuyauterie-saintdenis-before.jpeg",
+  "chaudiere-tassin-after":           IMG_CHAUDIERE_GAZ,
+  "douche-lyon7-before":              "/images/realisations/real-robinetterie-creteil-before.jpeg",
+  "douche-lyon7-after":               IMG_DOUCHE_ITALIENNE,
+  "plancher-chauffant-ecully-before": "/images/realisations/real-debouchage-issy-before.jpeg",
   "plancher-chauffant-ecully-after":  IMG_PLANCHER_CHAUFFANT,
-  "depannage-lyon2-before":         IMG_FUITE_EAU,
-  "depannage-lyon2-after":          "/images/realisations/depannage-lyon2-after.png",
-  "sdb-complete-oullins-before":    "/images/realisations/sdb-complete-oullins-before.png",
-  "sdb-complete-oullins-after":     IMG_RENOVATION_SDB,
+  "depannage-lyon2-before":           IMG_FUITE_EAU,
+  "depannage-lyon2-after":            "/images/realisations/real-fuite-vincennes-after.jpeg",
+  "sdb-complete-oullins-before":      "/images/realisations/real-appartneuf-nanterre-before.jpeg",
+  "sdb-complete-oullins-after":       IMG_RENOVATION_SDB,
 };
