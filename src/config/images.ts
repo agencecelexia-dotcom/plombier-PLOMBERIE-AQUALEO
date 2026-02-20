@@ -15,13 +15,13 @@
 const HERO_GENERIQUE = "/images/heroes/hero-generique.jpeg";
 
 /** #3 — 16:9 — hero plomberie + section tuyauterie */
-const IMG_PLOMBERIE_HERO = "/images/heroes/hero-plomberie.jpeg";
+const IMG_PLOMBERIE_HERO = "/images/heroes/hero-plomberie.png";
 
 /** #4 — 16:9 — hero installation-sanitaire + section renovation-complete + realisation Nanterre (apres) */
-const IMG_RENOVATION_SDB = "/images/heroes/hero-installation-sanitaire.jpeg";
+const IMG_RENOVATION_SDB = "/images/heroes/hero-installation-sanitaire.png";
 
 /** #13 — 4:3 — section douche-italienne + realisation Creteil (apres) */
-const IMG_DOUCHE_ITALIENNE = "/images/pages/page-douche-italienne.jpeg";
+const IMG_DOUCHE_ITALIENNE = "/images/pages/page-douche-italienne.png";
 
 /** #12 — 3:2 — section wc-suspendu + realisation Levallois-Perret (apres) */
 const IMG_SDB_PMR = "/images/pages/page-wc-suspendu.jpeg";
@@ -101,10 +101,10 @@ export const realisationImages: Record<string, string> = {
   "chaudiere-tassin-after":           IMG_CHAUDIERE_GAZ,
   "douche-lyon7-before":              "/images/realisations/real-robinetterie-creteil-before.jpeg",
   "douche-lyon7-after":               IMG_DOUCHE_ITALIENNE,
-  "plancher-chauffant-ecully-before": "/images/realisations/real-debouchage-issy-before.jpeg",
+  "plancher-chauffant-ecully-before": "/images/realisations/real-debouchage-issy-before.png",
   "plancher-chauffant-ecully-after":  IMG_PLANCHER_CHAUFFANT,
   "depannage-lyon2-before":           IMG_FUITE_EAU,
-  "depannage-lyon2-after":            "/images/realisations/real-fuite-vincennes-after.jpeg",
-  "sdb-complete-oullins-before":      "/images/realisations/real-appartneuf-nanterre-before.jpeg",
+  "depannage-lyon2-after":            "/images/realisations/real-fuite-vincennes-after.png",
+  "sdb-complete-oullins-before":      "/images/realisations/real-appartneuf-nanterre-before.png",
   "sdb-complete-oullins-after":       IMG_RENOVATION_SDB,
 };
