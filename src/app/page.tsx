@@ -1,0 +1,152 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Star } from "lucide-react";
+import { generatePageMetadata } from "@/lib/metadata";
+import { HeroSection } from "@/components/sections/HeroSection";
+import { ReassuranceBand } from "@/components/sections/ReassuranceBand";
+import { UrgencyProjectCards } from "@/components/sections/UrgencyProjectCards";
+import { SectionContainer } from "@/components/sections/SectionContainer";
+import { SectionHeading } from "@/components/sections/SectionHeading";
+import { ServiceCard } from "@/components/sections/ServiceCard";
+import { RealisationCard } from "@/components/sections/RealisationCard";
+import { TestimonialCard } from "@/components/sections/TestimonialCard";
+import { FAQSection } from "@/components/sections/FAQSection";
+import { CTASection } from "@/components/sections/CTASection";
+import { siteConfig } from "@/config/site";
+import { services } from "@/config/services";
+import { realisations } from "@/config/realisations";
+import { testimonials } from "@/config/testimonials";
+import { faqGeneral } from "@/config/faq";
+import { heroImages } from "@/config/images";
+
+export const metadata: Metadata = generatePageMetadata({
+  title: "Plombier Île-de-France | Dépannage 7j/7 — Devis Gratuit — Plomberie Aqualeo",
+  description: "Plomberie Aqualeo, votre plombier en Île-de-France. Dépannage 7j/7, installation sanitaire, réparation tuyauterie, adduction eau. Yohann Pereira. Devis gratuit.",
+  path: "/",
+});
+
+export default function HomePage() {
+  const featuredRealisations = realisations.slice(0, 4);
+  const featuredTestimonials = testimonials.slice(0, 3);
+
+  return (
+    <>
+      {/* Hero */}
+      <HeroSection
+        variant="home"
+        title="Votre plombier en Île-de-France — Dépannage 7j/7, intervention rapide"
+        subtitle="Fuite d'eau, canalisation bouchée, installation sanitaire ? Devis gratuit sous 48h."
+        imagePlaceholder={{
+          prompt:
+            "Plombier professionnel francais en uniforme bleu propre, agenouille sous un evier de cuisine moderne, reparant une canalisation avec une cle a molette, eclairage naturel chaleureux, interieur appartement parisien contemporain, photo realiste professionnelle, ratio 16:9",
+          aspectRatio: "16/9",
+          src: heroImages["accueil"] || undefined,
+        }}
+        ctaPrimary={{
+          label: `Appelez maintenant — ${siteConfig.phone}`,
+          href: siteConfig.phoneHref,
+        }}
+        ctaSecondary={{
+          label: "Demander un devis gratuit",
+          href: "/contact",
+        }}
+        badges={[
+          "Intervention <2h",
+          "Décennale",
+          "Devis gratuit",
+          `${siteConfig.googleRating}/5 — ${siteConfig.googleReviewCount} avis Google`,
+        ]}
+      />
+
+      {/* Réassurance */}
+      <ReassuranceBand />
+
+      {/* Urgence ou projet */}
+      <UrgencyProjectCards />
+
+      {/* Services */}
+      <SectionContainer variant="white">
+        <SectionHeading
+          title="Des solutions pour tous vos besoins en plomberie"
+          subtitle="De l'urgence à l'installation complète, Yohann Pereira intervient avec professionnalisme partout en Île-de-France."
+        />
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service) => (
+            <ServiceCard key={service.slug} service={service} />
+          ))}
+        </div>
+      </SectionContainer>
+
+      {/* Réalisations */}
+      <SectionContainer variant="gray">
+        <SectionHeading
+          title="Nos réalisations"
+          subtitle="Découvrez nos derniers chantiers plomberie en Île-de-France."
+        />
+        <div className="grid sm:grid-cols-2 gap-6">
+          {featuredRealisations.map((real) => (
+            <RealisationCard key={real.id} realisation={real} />
+          ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Link
+            href="/realisations"
+            className="px-8 py-4 border border-neutral-200 text-neutral-700 font-semibold rounded-lg hover:bg-neutral-50 transition-all inline-block"
+          >
+            Voir toutes nos réalisations
+          </Link>
+        </div>
+      </SectionContainer>
+
+      {/* Avis */}
+      <SectionContainer variant="white">
+        <SectionHeading
+          title="Ce que disent nos clients"
+        />
+        <div className="text-center mb-10">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <span className="text-4xl font-bold text-neutral-900">
+              {siteConfig.googleRating}
+            </span>
+            <span className="text-2xl text-muted-foreground">/5</span>
+          </div>
+          <div className="flex justify-center gap-1 mb-2" role="img" aria-label={`Note : ${siteConfig.googleRating} sur 5`}>
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star
+                key={i}
+                aria-hidden="true"
+                className={`w-6 h-6 ${
+                  i < Math.round(siteConfig.googleRating)
+                    ? "text-accent-500 fill-accent-500"
+                    : "text-gray-200"
+                }`}
+              />
+            ))}
+          </div>
+          <p className="text-muted-foreground">
+            {siteConfig.googleReviewCount} avis Google
+          </p>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {featuredTestimonials.map((testimonial, i) => (
+            <TestimonialCard key={i} testimonial={testimonial} />
+          ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Link
+            href="/avis-clients"
+            className="px-8 py-4 border border-neutral-200 text-neutral-700 font-semibold rounded-lg hover:bg-neutral-50 transition-all inline-block"
+          >
+            Voir tous les avis
+          </Link>
+        </div>
+      </SectionContainer>
+
+      {/* FAQ */}
+      <FAQSection faqs={faqGeneral} />
+
+      {/* CTA Final */}
+      <CTASection />
+    </>
+  );
+}

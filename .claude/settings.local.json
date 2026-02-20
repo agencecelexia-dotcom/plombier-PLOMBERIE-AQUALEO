@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/c/Users/AA/plombier-PLOMBERIE-AQUALEO/src/config/site.ts:*)",
+      "Bash(/c/Users/AA/plombier-PLOMBERIE-AQUALEO/src/config/services.ts:*)",
+      "Bash(/c/Users/AA/plombier-PLOMBERIE-AQUALEO/src/config/testimonials.ts:*)",
+      "Bash(/c/Users/AA/plombier-PLOMBERIE-AQUALEO/src/config/realisations.ts:*)",
+      "Bash(/c/Users/AA/plombier-PLOMBERIE-AQUALEO/src/config/navigation.ts:*)",
+      "Bash(/c/Users/AA/plombier-PLOMBERIE-AQUALEO/src/config/communes.ts:*)",
+      "Bash(/c/Users/AA/plombier-PLOMBERIE-AQUALEO/src/config/faq.ts:*)",
+      "Bash(/c/Users/AA/plombier-PLOMBERIE-AQUALEO/src/app/a-propos/page.tsx:*)",
+      "Bash(python3:*)",
+      "Bash(# Final check for any remaining old company references grep -r \"\"Durand\\\\|durand\\\\|Marc Durand\\\\|lyon\\\\.fr\\\\|chauffagiste à Lyon\\\\|plombier à Lyon\\\\|Auvergne\\\\|69003\\\\|RGE QualiPAC\\\\|AXA - Police\\\\|912 345 678\"\" /c/Users/AA/plombier-PLOMBERIE-AQUALEO/src --include=\"\"*.ts\"\" --include=\"\"*.tsx\"\")",
+      "Bash(gh auth:*)",
+      "Bash(git --version:*)"
+    ]
+  }
+}
