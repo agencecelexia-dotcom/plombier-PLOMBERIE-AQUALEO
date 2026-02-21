@@ -21,6 +21,9 @@ import {
   CheckCircle,
   BookOpen,
   Info,
+  PhoneCall,
+  MailOpen,
+  AlertCircle,
 } from "lucide-react";
 import type { AnalyticsEvent, Submission } from "@/lib/storage";
 import { siteConfig } from "@/config/site";
@@ -270,6 +273,25 @@ function StatCard({
 
 // --- Submissions Table ---
 
+type StatusFilter = "all" | Submission["status"];
+
+function buildMailtoLink(sub: Submission): string {
+  const subject = encodeURIComponent(
+    `Réponse à votre demande — Plomberie Aqualeo`
+  );
+  const body = encodeURIComponent(
+    `Bonjour ${sub.nom},\n\n` +
+    `Merci pour votre demande concernant : ${sub.service}.\n\n` +
+    `Nous avons bien pris note de votre message et nous revenons vers vous dans les plus brefs délais pour convenir d'un rendez-vous.\n\n` +
+    `N'hésitez pas à nous appeler directement au ${siteConfig.phone} si vous avez une urgence.\n\n` +
+    `Cordialement,\n` +
+    `Yohann Pereira\n` +
+    `Plomberie Aqualeo\n` +
+    `📞 ${siteConfig.phone}`
+  );
+  return `mailto:${sub.email}?subject=${subject}&body=${body}`;
+}
+
 function SubmissionsTable({
   submissions,
   onUpdateStatus,
@@ -279,99 +301,192 @@ function SubmissionsTable({
   onUpdateStatus: (id: string, status: Submission["status"]) => void;
   onDelete: (id: string) => void;
 }) {
-  const statusColors: Record<string, string> = {
-    new: "bg-blue-500/20 text-blue-300",
-    read: "bg-amber-500/20 text-amber-300",
-    done: "bg-emerald-500/20 text-emerald-300",
+  const [filter, setFilter] = useState<StatusFilter>("all");
+
+  const statusConfig: Record<
+    Submission["status"],
+    { label: string; color: string; icon: React.ReactNode }
+  > = {
+    new: {
+      label: "Nouveau",
+      color: "bg-blue-500/20 text-blue-300 border border-blue-500/30",
+      icon: <AlertCircle className="w-3 h-3" />,
+    },
+    read: {
+      label: "En cours",
+      color: "bg-amber-500/20 text-amber-300 border border-amber-500/30",
+      icon: <BookOpen className="w-3 h-3" />,
+    },
+    done: {
+      label: "Traité",
+      color: "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30",
+      icon: <CheckCircle className="w-3 h-3" />,
+    },
   };
 
-  const statusLabels: Record<string, string> = {
-    new: "Nouveau",
-    read: "Lu",
-    done: "Traite",
+  const counts = {
+    all: submissions.length,
+    new: submissions.filter((s) => s.status === "new").length,
+    read: submissions.filter((s) => s.status === "read").length,
+    done: submissions.filter((s) => s.status === "done").length,
   };
 
-  if (submissions.length === 0) {
-    return (
-      <div className="text-center py-12 text-slate-400">
-        <Mail className="w-12 h-12 mx-auto mb-4 opacity-30" />
-        <p>Aucune demande de contact pour le moment</p>
-      </div>
-    );
-  }
+  const filtered =
+    filter === "all" ? submissions : submissions.filter((s) => s.status === filter);
+
+  const filterTabs: { key: StatusFilter; label: string; dot?: string }[] = [
+    { key: "all", label: "Toutes" },
+    { key: "new", label: "Nouvelles", dot: "bg-blue-400" },
+    { key: "read", label: "En cours", dot: "bg-amber-400" },
+    { key: "done", label: "Traitées", dot: "bg-emerald-400" },
+  ];
 
   return (
-    <div className="space-y-3">
-      {submissions.map((sub) => (
-        <div
-          key={sub.id}
-          className="bg-[#0f172a] rounded-xl p-4 border border-slate-700/50 hover:border-slate-600/50 transition-colors"
-        >
-          <div className="flex items-start justify-between gap-4 mb-3">
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-medium text-white">{sub.nom}</span>
-                <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[sub.status]}`}>
-                  {statusLabels[sub.status]}
-                </span>
-              </div>
-              <div className="flex items-center gap-4 text-sm text-slate-400">
-                <span className="flex items-center gap-1">
-                  <Phone className="w-3 h-3" />
-                  {sub.telephone}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Mail className="w-3 h-3" />
-                  {sub.email}
-                </span>
-              </div>
-            </div>
-            <div className="text-xs text-slate-500 flex items-center gap-1 shrink-0">
-              <Clock className="w-3 h-3" />
-              {formatDate(sub.date)}
-            </div>
-          </div>
+    <div>
+      {/* Barre de filtre */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {filterTabs.map(({ key, label, dot }) => (
+          <button
+            key={key}
+            onClick={() => setFilter(key)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              filter === key
+                ? "bg-slate-600 text-white"
+                : "bg-slate-800 text-slate-400 hover:text-white"
+            }`}
+          >
+            {dot && <span className={`w-2 h-2 rounded-full ${dot}`} />}
+            {label}
+            <span className="ml-1 text-xs opacity-60">{counts[key]}</span>
+          </button>
+        ))}
+      </div>
 
-          <div className="flex items-center gap-2 mb-3 text-sm">
-            <Wrench className="w-3.5 h-3.5 text-slate-500" />
-            <span className="text-slate-300">{sub.service}</span>
-          </div>
-
-          {sub.message && (
-            <p className="text-sm text-slate-400 mb-3 bg-slate-800/50 rounded-lg p-3">
-              {sub.message}
-            </p>
-          )}
-
-          <div className="flex items-center gap-2">
-            {sub.status === "new" && (
-              <button
-                onClick={() => onUpdateStatus(sub.id, "read")}
-                className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 transition-colors"
-              >
-                <BookOpen className="w-3 h-3" />
-                Marquer lu
-              </button>
-            )}
-            {sub.status !== "done" && (
-              <button
-                onClick={() => onUpdateStatus(sub.id, "done")}
-                className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 transition-colors"
-              >
-                <CheckCircle className="w-3 h-3" />
-                Traite
-              </button>
-            )}
-            <button
-              onClick={() => onDelete(sub.id)}
-              className="flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg bg-red-500/10 text-red-300 hover:bg-red-500/20 transition-colors ml-auto"
-            >
-              <Trash2 className="w-3 h-3" />
-              Supprimer
-            </button>
-          </div>
+      {/* Liste */}
+      {filtered.length === 0 ? (
+        <div className="text-center py-12 text-slate-400">
+          <Mail className="w-12 h-12 mx-auto mb-4 opacity-30" />
+          <p>Aucune demande dans cette catégorie</p>
         </div>
-      ))}
+      ) : (
+        <div className="space-y-3">
+          {filtered.map((sub) => {
+            const cfg = statusConfig[sub.status];
+            return (
+              <div
+                key={sub.id}
+                className={`bg-[#0f172a] rounded-xl border transition-colors ${
+                  sub.status === "new"
+                    ? "border-blue-500/40"
+                    : "border-slate-700/50 hover:border-slate-600/50"
+                }`}
+              >
+                {/* En-tête */}
+                <div className="flex items-start justify-between gap-4 p-4 pb-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="font-semibold text-white">{sub.nom}</span>
+                      <span
+                        className={`inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full ${cfg.color}`}
+                      >
+                        {cfg.icon}
+                        {cfg.label}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-slate-500">
+                      <Wrench className="w-3 h-3" />
+                      <span>{sub.service}</span>
+                    </div>
+                  </div>
+                  <div className="text-xs text-slate-500 flex items-center gap-1 shrink-0">
+                    <Clock className="w-3 h-3" />
+                    {formatDate(sub.date)}
+                  </div>
+                </div>
+
+                {/* Message */}
+                {sub.message && (
+                  <div className="px-4 pb-3">
+                    <p className="text-sm text-slate-300 bg-slate-800/60 rounded-lg p-3 leading-relaxed">
+                      {sub.message}
+                    </p>
+                  </div>
+                )}
+
+                {/* Actions */}
+                <div className="flex flex-wrap items-center gap-2 px-4 pb-4 pt-1 border-t border-slate-700/40">
+                  {/* Contacter */}
+                  <a
+                    href={`tel:${sub.telephone.replace(/\s/g, "")}`}
+                    className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 transition-colors font-medium"
+                  >
+                    <PhoneCall className="w-3.5 h-3.5" />
+                    {sub.telephone}
+                  </a>
+                  <a
+                    href={buildMailtoLink(sub)}
+                    className="inline-flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-lg bg-violet-500/20 text-violet-300 hover:bg-violet-500/30 transition-colors font-medium"
+                  >
+                    <MailOpen className="w-3.5 h-3.5" />
+                    Répondre par email
+                  </a>
+
+                  {/* Statut */}
+                  <div className="flex items-center gap-1 ml-auto">
+                    {sub.status === "new" && (
+                      <button
+                        onClick={() => onUpdateStatus(sub.id, "read")}
+                        className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 transition-colors"
+                        title="Marquer comme lu"
+                      >
+                        <BookOpen className="w-3 h-3" />
+                        En cours
+                      </button>
+                    )}
+                    {sub.status === "read" && (
+                      <button
+                        onClick={() => onUpdateStatus(sub.id, "new")}
+                        className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 transition-colors"
+                        title="Remettre en nouveau"
+                      >
+                        <AlertCircle className="w-3 h-3" />
+                        Nouveau
+                      </button>
+                    )}
+                    {sub.status !== "done" && (
+                      <button
+                        onClick={() => onUpdateStatus(sub.id, "done")}
+                        className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20 transition-colors"
+                        title="Marquer comme traité"
+                      >
+                        <CheckCircle className="w-3 h-3" />
+                        Traité
+                      </button>
+                    )}
+                    {sub.status === "done" && (
+                      <button
+                        onClick={() => onUpdateStatus(sub.id, "new")}
+                        className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-slate-500/10 text-slate-400 hover:bg-slate-500/20 transition-colors"
+                        title="Rouvrir la demande"
+                      >
+                        <RefreshCw className="w-3 h-3" />
+                        Rouvrir
+                      </button>
+                    )}
+                    <button
+                      onClick={() => onDelete(sub.id)}
+                      className="flex items-center gap-1 text-xs px-2.5 py-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
+                      title="Supprimer"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
