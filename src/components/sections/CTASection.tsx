@@ -14,7 +14,7 @@ interface CTASectionProps {
 }
 
 export function CTASection({
-  title = "Un projet ? Une urgence ? Contactez-nous maintenant.",
+  title = "Votre plombier de confiance en Île-de-France — Devis gratuit sous 48h",
   subtitle,
   variant = "devis",
 }: CTASectionProps) {

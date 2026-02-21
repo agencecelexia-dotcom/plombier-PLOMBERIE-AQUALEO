@@ -1,7 +1,9 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-const STORAGE_DIR = path.join(process.cwd(), "storage");
+const STORAGE_DIR = process.env.VERCEL
+  ? path.join("/tmp", "storage")
+  : path.join(process.cwd(), "storage");
 const ANALYTICS_FILE = path.join(STORAGE_DIR, "analytics.json");
 const SUBMISSIONS_FILE = path.join(STORAGE_DIR, "submissions.json");
 

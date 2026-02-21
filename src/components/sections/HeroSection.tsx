@@ -60,7 +60,7 @@ export function HeroSection({
                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="inline-block text-xs font-semibold tracking-[0.3em] uppercase text-accent-400 mb-6"
               >
-                Plombier chauffagiste &mdash; {siteConfig.address.city}
+                Plombier &mdash; {siteConfig.address.city}
               </motion.span>
 
               {/* Title with word-by-word animation */}
@@ -155,7 +155,7 @@ export function HeroSection({
 
   if (variant === "page") {
     return (
-      <section className="relative py-16 md:py-20">
+      <section className="relative min-h-[280px] md:min-h-[340px] flex items-center">
         <div className="absolute inset-0">
           <ImagePlaceholder
             prompt={imagePlaceholder.prompt}
@@ -168,7 +168,7 @@ export function HeroSection({
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/75 to-black/80 z-10" />
-        <div className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative z-20 w-full py-16 md:py-20 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
             {title}
           </h1>

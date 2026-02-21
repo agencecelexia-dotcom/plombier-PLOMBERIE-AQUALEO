@@ -8,9 +8,9 @@ export const siteConfig = {
   phoneHref: "tel:+33613142090",
   email: "plombier88idf@gmail.com",
   address: {
-    street: "Île-de-France",
-    city: "Île-de-France",
-    postalCode: "75000",
+    street: "24 rue Raymond de la Grange",
+    city: "Villeneuve-Saint-Georges",
+    postalCode: "94190",
     region: "Île-de-France",
     country: "France",
   },
@@ -23,7 +23,7 @@ export const siteConfig = {
   social: {
     facebook: "",
     instagram: "https://instagram.com/plombier88idf",
-    google: "",
+    google: "https://www.google.com/search?q=Plomberie+Aqualeo+Villeneuve-Saint-Georges+avis",
   },
   siret: "À compléter",
   rge: "",
